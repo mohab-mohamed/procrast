@@ -1,0 +1,50 @@
+<mat-drawer-container *ngIf="!mobile" class="full-container h-100" autosize>
+    <mat-drawer #drawer class="sidenav" mode="side">
+        <div class="sidenav-container">
+            <div class="top-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Choose a date</mat-label>
+                    <input (dateInput)="onDateInput($event)" readonly matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker>
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="bot-container">
+                <app-sidenav-button title="Mohab"></app-sidenav-button>
+                <app-sidenav-button imgSource="assets/settings.png" title="Settings"></app-sidenav-button>
+                <app-sidenav-button (click)="logout()" imgSource="assets/logout.png" title="Log Out"></app-sidenav-button>
+            </div>
+        </div>
+
+    </mat-drawer>
+
+    <div class="sidenav-content">
+        <div class="container-fluid">
+            <div class="row h-100">
+                <div class="col-1 pos-left-center">
+                    <button *ngIf="rightCaret" type="button" mat-button (click)="drawer.toggle(); switchCaret()">
+                        <img src="assets/right-caret.png" />
+                    </button>
+                    <button *ngIf="!rightCaret" type="button" mat-button (click)="drawer.toggle(); switchCaret()">
+                        <img src="assets/left-caret.png" />
+                    </button>
+                </div>
+                <div class="col-11 pos-col-center">
+                    <app-pie-chart></app-pie-chart>
+                </div>
+                <!-- <div class="col-4 pos-right-center sideapp-col">
+                    <div class="side-app-container h-100">
+                        <div class="todo-container h-50">
+                            <app-todo-list class="w-100"></app-todo-list>
+                        </div>
+                        <div class="calendar-container pos-bot-center h-50">
+                            <app-calendar></app-calendar>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+</mat-drawer-container>
