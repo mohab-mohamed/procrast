@@ -49,6 +49,22 @@ export class PieChartComponent implements OnInit, OnDestroy {
     console.log("Deactivate", JSON.parse(JSON.stringify(data)));
   }
 
+  toolTipFormat(e: any, e2: any) {
+    console.log(e);
+    e.data.label = 'TEST'
+  }
+
+  minutesToText(num: number) {
+    const hours = Math.floor(num / 60);
+    const minutes = num % 60;
+    const hourNumber = (hours == 0) ? '' : hours;
+    const hourLabel = (hours == 1) ? 'hour' : (hours == 0) ? '' : 'hours'
+    const betweenLabel = (hours > 0 && minutes > 0) ? ' and ' : '';
+    const minuteNumber = (minutes == 0) ? '' : minutes;
+    const minuteLabel = (minutes == 1) ? 'minute' : (minutes == 0) ? '' : 'minutes';
+    return hourNumber + ' ' + hourLabel + betweenLabel + minuteNumber + ' ' + minuteLabel;
+  }
+
   ngOnDestroy(): void {
     this.timeTableSubscription.unsubscribe();
   }

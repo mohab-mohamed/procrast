@@ -2,5 +2,8 @@
     <ngx-charts-pie-chart [scheme]="colorScheme" [results]="data" [gradient]="gradient" [legend]="showLegend"
         [labels]="showLabels" [doughnut]="isDoughnut" (select)="onSelect($event)" (activate)="onActivate($event)"
         (deactivate)="onDeactivate($event)">
+        <ng-template #tooltipTemplate let-model="model" class="pos-col-center">
+            <pre>{{ minutesToText(model.value) }}</pre>
+        </ng-template>
     </ngx-charts-pie-chart>
 </div>
