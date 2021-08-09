@@ -10,8 +10,8 @@ export class TimeTableService {
     ([
       { name: 'Study', value: 0 },
       { name: 'Events', value: 0 },
-      { name: 'Sleep', value: 0 },
-      { name: 'Free', value: 1440 },
+      { name: 'Sleep', value: 480 },
+      { name: 'Free', value: 960 },
     ]);
 
   constructor() { }
