@@ -13,25 +13,33 @@
             <div class="bot-container">
                 <app-sidenav-button title="Mohab"></app-sidenav-button>
                 <app-sidenav-button imgSource="assets/settings.png" title="Settings"></app-sidenav-button>
-                <app-sidenav-button (click)="logout()" imgSource="assets/logout.png" title="Log Out"></app-sidenav-button>
+                <app-sidenav-button (click)="logout()" imgSource="assets/logout.png" title="Log Out">
+                </app-sidenav-button>
             </div>
         </div>
 
     </mat-drawer>
 
-    <div class="sidenav-content">
-        <div class="container-fluid">
+    <div class="sidenav-content h-100">
+        <div class="container-fluid h-100">
             <div class="row h-100">
                 <div class="col-1 pos-left-center">
                     <button *ngIf="rightCaret" type="button" mat-button (click)="drawer.toggle(); switchCaret()">
-                        <img src="assets/right-caret.png" />
-                    </button>
-                    <button *ngIf="!rightCaret" type="button" mat-button (click)="drawer.toggle(); switchCaret()">
                         <img src="assets/left-caret.png" />
                     </button>
+                    <button *ngIf="!rightCaret" type="button" mat-button (click)="drawer.toggle(); switchCaret()">
+                        <img src="assets/right-caret.png" />
+                    </button>
                 </div>
-                <div class="col-11 pos-col-center">
-                    <app-pie-chart></app-pie-chart>
+                <div class="col-9 pos-col-center">
+                    <app-pie-chart class="app-pie-chart"></app-pie-chart>
+                </div>
+                <div class="col-2 pos-col-center">
+                    <mat-selection-list class="w-100" #shoes [multiple]="false">
+                        <mat-list-option *ngFor="let event of events" [value]="event.summary">
+                            {{event.summary}}
+                        </mat-list-option>
+                    </mat-selection-list>
                 </div>
                 <!-- <div class="col-4 pos-right-center sideapp-col">
                     <div class="side-app-container h-100">

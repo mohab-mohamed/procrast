@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 import { GoogleAuthResponse } from './google-user.interface';
+import { CalendarEventsResponse } from 'src/app/interfaces/CalendarEventsResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +27,14 @@ export class GoogleService {
   getCalendars(): Promise<any> {
     return this.http.get<any>("http://localhost:4200/api/google/calendars", { headers: this.headers }).toPromise();
   }
+
+  getEvents(timeMin: string, timeMax: string): Promise<CalendarEventsResponse> {
+    let timeParams = new HttpParams().set('timeMin', timeMin);
+    timeParams = timeParams.set('timeMax', timeMax);
+    return this.http.get<any>("http://localhost:4200/api/google/calendar", {params: timeParams }).toPromise();
+  }
+
+
+
+
 }

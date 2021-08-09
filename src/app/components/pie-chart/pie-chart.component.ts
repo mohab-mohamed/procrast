@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { PieData } from 'src/app/interfaces/PieData';
+import { TimeTableService } from 'src/app/services/time-table/time-table.service';
 import { single } from "./data";
 
 @Component({
@@ -6,10 +9,11 @@ import { single } from "./data";
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.sass']
 })
-export class PieChartComponent implements OnInit {
-
+export class PieChartComponent implements OnInit, OnDestroy {
+  data!: PieData[];
   single!: any[];
-  view: [number, number] = [900, 900];
+  // view: [number, number] = [900, 900];
+  timeTableSubscription!: Subscription;
 
   // options
   gradient: boolean = true;
@@ -22,11 +26,15 @@ export class PieChartComponent implements OnInit {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
-  constructor() {
+  constructor(private timeTableService: TimeTableService) {
     Object.assign(this, { single });
   }
 
   ngOnInit(): void {
+    this.timeTableSubscription = this.timeTableService.getTimeTable().subscribe(timeTable => {
+      this.data = [...timeTable]
+      console.log('pie', this.data);
+    });
   }
 
   onSelect(data: any): void {
@@ -41,4 +49,7 @@ export class PieChartComponent implements OnInit {
     console.log("Deactivate", JSON.parse(JSON.stringify(data)));
   }
 
+  ngOnDestroy(): void {
+    this.timeTableSubscription.unsubscribe();
+  }
 }

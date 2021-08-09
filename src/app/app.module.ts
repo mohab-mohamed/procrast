@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 
 //chart
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -23,6 +24,11 @@ import { LoginComponent } from './screens/login/login.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { SidenavButtonComponent } from './components/sidenav-button/sidenav-button.component';
+
+//graphql
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 
 const globalRippleConfig: RippleGlobalOptions = {
   disabled: false,
@@ -52,11 +58,24 @@ const globalRippleConfig: RippleGlobalOptions = {
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    MatInputModule
+    MatInputModule,
+    MatListModule
   ],
   providers: [
     { provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: globalRippleConfig },
-    CookieService
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory(httpLink: HttpLink) {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'http://localhost:3000',
+          }),
+        };
+      },
+      deps: [HttpLink],
+    },
+    CookieService,
   ],
   bootstrap: [AppComponent]
 })
