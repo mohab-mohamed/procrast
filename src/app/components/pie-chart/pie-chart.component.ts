@@ -26,6 +26,22 @@ export class PieChartComponent implements OnInit, OnDestroy {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
+  customColors = [
+    {
+      name: 'Free',
+      value: '#C7E3A4'
+    },
+    {
+      name: 'Sleep',
+      value: '#C8E4F4'
+    },
+    {
+      name: 'Events',
+      value: '#FEC9C9'
+    }
+
+  ];
+
   constructor(private timeTableService: TimeTableService) {
     Object.assign(this, { single });
   }
