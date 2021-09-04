@@ -12,7 +12,8 @@
             </div>
             <div class="bot-container">
                 <app-sidenav-button title="Mohab"></app-sidenav-button>
-                <app-sidenav-button imgSource="assets/settings.png" title="Settings"></app-sidenav-button>
+                <app-sidenav-button (click)="openDialog()" imgSource="assets/settings.png" title="Settings">
+                </app-sidenav-button>
                 <app-sidenav-button (click)="logout()" imgSource="assets/logout.png" title="Log Out">
                 </app-sidenav-button>
             </div>

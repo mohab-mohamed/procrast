@@ -10,6 +10,9 @@ import { ItemsEntity } from 'src/app/interfaces/CalendarEventsResponse';
 import { PieData } from 'src/app/interfaces/PieData';
 import { TimeTableService } from 'src/app/services/time-table/time-table.service';
 
+import { MatDialog } from '@angular/material/dialog';
+import { SettingsDialogComponent } from 'src/app/components/settings-dialog/settings-dialog.component';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -33,9 +36,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private googleService: GoogleService,
     private router: Router,
     private cookieService: CookieService,
-    private timeTableService: TimeTableService
+    private timeTableService: TimeTableService,
+    public dialog: MatDialog
   ) {
 
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(SettingsDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   ngOnInit(): void {

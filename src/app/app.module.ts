@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
@@ -16,6 +17,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 //chart
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -29,6 +33,8 @@ import { SidenavButtonComponent } from './components/sidenav-button/sidenav-butt
 import { APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
+import { SettingsDialogComponent } from './components/settings-dialog/settings-dialog.component';
+import { SettingsSliderComponent } from './components/settings-slider/settings-slider.component';
 
 const globalRippleConfig: RippleGlobalOptions = {
   disabled: false,
@@ -44,7 +50,9 @@ const globalRippleConfig: RippleGlobalOptions = {
     LoginComponent,
     DashboardComponent,
     PieChartComponent,
-    SidenavButtonComponent
+    SidenavButtonComponent,
+    SettingsDialogComponent,
+    SettingsSliderComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +67,10 @@ const globalRippleConfig: RippleGlobalOptions = {
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    MatSliderModule,
+    FormsModule
   ],
   providers: [
     { provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: globalRippleConfig },

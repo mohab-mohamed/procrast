@@ -19,7 +19,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
   gradient: boolean = true;
   showLegend: boolean = false;
   showLabels: boolean = true;
-  isDoughnut: boolean = false;
+  isDoughnut: boolean = true;
   legendPosition: string = 'below';
 
   colorScheme = {

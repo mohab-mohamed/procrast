@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Install Angular</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="container h-100 p-0">
+        <div class="row dialog-row h-100 py-3">
+            <div class="col-3 pos-row-center">
+                <span class="slider-label">sleep</span>
+                <app-settings-slider [vertical]="true" [thumbLabel]="true"></app-settings-slider>
+            </div>
+            <div class="col-3 pos-row-center">
+                <span class="slider-label"></span>
+                <app-settings-slider [vertical]="true" [thumbLabel]="true"></app-settings-slider>
+            </div>
+            <div class="col-3 pos-row-center">
+                <span class="slider-label"></span>
+                <app-settings-slider [vertical]="true" [thumbLabel]="true"></app-settings-slider>
+            </div>
+            <div class="col-3 pos-row-center">
+                <span class="slider-label"></span>
+                <app-settings-slider [vertical]="true" [thumbLabel]="true"></app-settings-slider>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>
