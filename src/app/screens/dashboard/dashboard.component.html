@@ -1,14 +1,22 @@
 <mat-drawer-container *ngIf="!mobile" class="full-container h-100" autosize>
-    <mat-drawer #drawer class="sidenav" mode="side">
+    <mat-drawer #drawer class="sidenav" [opened]="true" mode="side">
         <div class="sidenav-container">
             <div class="top-container">
-                <mat-form-field appearance="fill">
+                <mat-form-field id="dateSelect" appearance="fill">
                     <mat-label>Choose a date</mat-label>
                     <input (dateInput)="onDateInput($event)" readonly matInput [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker>
                     </mat-datepicker>
                 </mat-form-field>
+                <mat-form-field id="taskSelect" appearance="fill">
+                    <mat-label>task list</mat-label>
+                    <mat-select [(ngModel)]="selected" (selectionChange)="selectList($event)" >
+                      <mat-option *ngFor="let list of lists"   [value]="list.title">
+                        {{list.title}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
             </div>
             <div class="bot-container">
                 <app-sidenav-button title="Mohab"></app-sidenav-button>
