@@ -6,6 +6,8 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { GoogleAuthResponse } from './google-user.interface';
 import { CalendarEventsResponse } from 'src/app/interfaces/CalendarEventsResponse';
+import { TaskListsResponse } from 'src/app/interfaces/TaskListsResponse';
+import { TasksResponse } from 'src/app/interfaces/TasksResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,15 @@ export class GoogleService {
     let timeParams = new HttpParams().set('timeMin', timeMin);
     timeParams = timeParams.set('timeMax', timeMax);
     return this.http.get<any>("http://localhost:4200/api/google/calendar", {params: timeParams }).toPromise();
+  }
+
+  getTaskLists(): Promise<TaskListsResponse> {
+    return this.http.get<any>("http://localhost:4200/api/google/lists").toPromise();
+  }
+
+  getTasks(listName: string): Promise<TasksResponse> {
+    let listParams = new HttpParams().set('listName', listName);
+    return this.http.get<any>("http://localhost:4200/api/google/tasks", {params: listParams }).toPromise();
   }
 
 
