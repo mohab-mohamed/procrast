@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { GoogleService } from '../../services/google/google.service';
@@ -12,6 +12,9 @@ import { TimeTableService } from 'src/app/services/time-table/time-table.service
 
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsDialogComponent } from 'src/app/components/settings-dialog/settings-dialog.component';
+import { Item } from 'src/app/interfaces/TaskListsResponse';
+import { MatSelectChange } from '@angular/material/select';
+import { TaskItemsEntity } from 'src/app/interfaces/TasksResponse';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,6 +35,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   timeTable!: PieData[];
   timeTableSubscription!: Subscription;
 
+  lists: Item[] = [];
+  selected!: string;
+  listId: string = '';
+  deadlines: TaskItemsEntity[] = [];
   constructor(
     private googleService: GoogleService,
     private router: Router,
@@ -50,7 +57,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (window.innerWidth > 1365) {
       this.mobile = false;
     } else {
@@ -65,6 +72,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     });
     this.timeTableSubscription = this.timeTableService.getTimeTable().subscribe(timeTable => this.timeTable = timeTable);
+    await this.googleService.getTaskLists().then(res => this.lists = res.listsData.items);
+    if(this.lists.length > 0) {
+      this.selected = this.lists[0].title;
+      this.listId = this.lists[0].id;
+    }
+
+    console.log('lists', this.lists);
+    this.getTasks();
   }
 
   async onDateInput(event: MatDatepickerInputEvent<any>) {
@@ -94,11 +109,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     console.log(this.timeTable);
   }
 
-
-  convertStringToDate(dateString: string) {
-
-  }
-
   logout() {
     this.cookieService.delete('MYzKBlSitQ');
     this.router.navigate(['']);
@@ -109,9 +119,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.rightCaret = !this.rightCaret;
   }
 
-  async grabCalendars() {
-    const calendars = await this.googleService.getCalendars();
-    console.log(calendars);
+  async selectList(event: MatSelectChange) {
+    this.listId = this.lists.find(list => list.title === event.value)!.id;
+    if(this.listId) {
+      this.getTasks();
+    }
+  }
+
+  async getTasks() {
+    const tasks = await this.googleService.getTasks(this.listId);
+    console.log('tasks', tasks);
   }
 
   ngOnDestroy(): void {
